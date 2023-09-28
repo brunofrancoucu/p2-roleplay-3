@@ -60,7 +60,7 @@ El encuentro termina cuando todos los héroes o todos los enemigos han muerto. S
 
 Identifiquen los tests necesarios para incorporar el concepto de encuentro y agreguenlos al proyecto de test. Estos tests deben fallar en este punto.
 
-Incorporen los tests a la rama *master* del repositorio (utilizando Pull Requests), y creen un [_Tag_](https://git-scm.com/book/en/v2/Git-Basics-Tagging) en este commit llamado `TDD_Start`.
+Incorporen los tests a la rama *master* del repositorio, y creen un [_Tag_](https://git-scm.com/book/en/v2/Git-Basics-Tagging) en este commit llamado `TDD_Start`.
 
 ### 4.2: El código
 
@@ -68,8 +68,7 @@ Agreguen los encuentros y el código necesario para que funcionen según la lóg
 
 Al finalizar este paso, los tests del punto anterior (4.1) deben pasar (dan verde).
 
-Incorporen el código a la rama *master* del repositorio (utilizando Pull Requests), y creen un [_Tag_](https://git-scm.com/book/en/v2/Git-Basics-Tagging) en este commit llamado `TDD_End`.
-
+Incorporen el código a la rama *master* del repositorio, y creen un [_Tag_](https://git-scm.com/book/en/v2/Git-Basics-Tagging) en este commit llamado `TDD_End`.
 
 *******
 
