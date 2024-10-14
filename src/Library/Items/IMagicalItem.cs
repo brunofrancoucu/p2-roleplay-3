@@ -1,6 +1,5 @@
-namespace RoleplayGame
+namespace Ucu.Poo.RoleplayGame;
+
+public interface IMagicalItem
 {
-    public interface IMagicalItem
-    {
-    }
 }

@@ -1,13 +1,12 @@
-namespace RoleplayGame
+namespace Ucu.Poo.RoleplayGame;
+
+public class Bow: IAttackItem
 {
-    public class Bow: IAttackItem
+    public int AttackValue
     {
-        public int AttackValue 
+        get
         {
-            get
-            {
-                return 15;
-            } 
+            return 15;
         }
     }
 }

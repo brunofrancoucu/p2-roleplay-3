@@ -1,13 +1,12 @@
-namespace RoleplayGame
+namespace Ucu.Poo.RoleplayGame;
+
+public class Shield: IDefenseItem
 {
-    public class Shield: IDefenseItem
+    public int DefenseValue
     {
-        public int DefenseValue
+        get
         {
-            get
-            {
-                return 14;
-            }
+            return 14;
         }
     }
 }

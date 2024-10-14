@@ -1,9 +1,8 @@
-namespace RoleplayGame
-{
-    public interface IMagicCharacter: ICharacter
-    {
-        void AddItem(IMagicalItem item);
+namespace Ucu.Poo.RoleplayGame;
 
-        void RemoveItem(IMagicalItem item);
-    }
+public interface IMagicCharacter: ICharacter
+{
+    void AddItem(IMagicalItem item);
+
+    void RemoveItem(IMagicalItem item);
 }

@@ -1,45 +1,44 @@
 using System.Collections.Generic;
 
-namespace RoleplayGame
+namespace Ucu.Poo.RoleplayGame;
+
+public class SpellsBook: IMagicalAttackItem, IMagicalDefenseItem
 {
-    public class SpellsBook: IMagicalAttackItem, IMagicalDefenseItem
+    private List<ISpell> spells = new List<ISpell>();
+
+    public int AttackValue
     {
-        private List<ISpell> spells = new List<ISpell>();
-        
-        public int AttackValue
+        get
         {
-            get
+            int value = 0;
+            foreach (ISpell spell in this.spells)
             {
-                int value = 0;
-                foreach (ISpell spell in this.spells)
-                {
-                    value += spell.AttackValue;
-                }
-                return value;
+                value += spell.AttackValue;
             }
+            return value;
         }
+    }
 
-        public int DefenseValue
+    public int DefenseValue
+    {
+        get
         {
-            get
+            int value = 0;
+            foreach (ISpell spell in this.spells)
             {
-                int value = 0;
-                foreach (ISpell spell in this.spells)
-                {
-                    value += spell.DefenseValue;
-                }
-                return value;
+                value += spell.DefenseValue;
             }
+            return value;
         }
+    }
 
-        public void AddSpell(ISpell spell)
-        {
-            this.spells.Add(spell);
-        }
+    public void AddSpell(ISpell spell)
+    {
+        this.spells.Add(spell);
+    }
 
-        public void RemoveSpell(ISpell spell)
-        {
-            this.spells.Remove(spell);
-        }
+    public void RemoveSpell(ISpell spell)
+    {
+        this.spells.Remove(spell);
     }
 }

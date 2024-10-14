@@ -1,7 +1,6 @@
-namespace RoleplayGame
+namespace Ucu.Poo.RoleplayGame;
+
+public interface IAttackItem: IItem
 {
-    public interface IAttackItem: IItem
-    {
-        int AttackValue { get; }
-    }
+    int AttackValue { get; }
 }

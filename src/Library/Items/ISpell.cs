@@ -1,9 +1,8 @@
-namespace RoleplayGame
-{
-    public interface ISpell
-    {
-        int AttackValue { get; }
+namespace Ucu.Poo.RoleplayGame;
 
-        int DefenseValue { get; }
-    }
+public interface ISpell
+{
+    int AttackValue { get; }
+
+    int DefenseValue { get; }
 }
