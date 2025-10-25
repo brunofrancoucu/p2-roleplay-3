@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Ucu.Poo.RoleplayGame.Program;
+namespace RoleplayGame.Program;
 
 class Program
 {
