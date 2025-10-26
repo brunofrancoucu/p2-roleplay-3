@@ -3,16 +3,28 @@ namespace Ucu.Poo.RoleplayGame;
 
 public class Enemy: ICharacter
 {
+    public string Name { get; set; }
+    
     private int health = 100;
     
     private List<IItem> items = new List<IItem>();
 
-    public Dwarf(string name)
+    public Enemy(string name)
     {
         this.Name = name;
 
         this.AddItem(new Axe());
         this.AddItem(new Helmet());
+
+        this.VP = 1;
+    }
+    
+    public int VP { get; set; }
+
+    public void StealVP(ICharacter target)
+    {
+        this.VP += target.VP;
+        target.VP = 0;
     }
 
     public int Health
@@ -26,12 +38,36 @@ public class Enemy: ICharacter
             this.health = value < 0 ? 0 : value;
         }
     }
-
-    public int VP
+    
+    public int AttackValue
     {
         get
         {
-            return 1;
+            int value = 0;
+            foreach (IItem item in this.items)
+            {
+                if (item is IAttackItem)
+                {
+                    value += (item as IAttackItem).AttackValue;
+                }
+            }
+            return value;
+        }
+    }
+
+    public int DefenseValue
+    {
+        get
+        {
+            int value = 0;
+            foreach (IItem item in this.items)
+            {
+                if (item is IDefenseItem)
+                {
+                    value += (item as IDefenseItem).DefenseValue;
+                }
+            }
+            return value;
         }
     }
 

@@ -10,7 +10,7 @@ public interface ICharacter
 
     int DefenseValue { get; }
  
-    int VP { get;}
+    int VP { get; set;  }
 
     void StealVP(ICharacter character);
 

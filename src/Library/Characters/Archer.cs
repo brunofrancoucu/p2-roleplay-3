@@ -14,6 +14,14 @@ public class Archer: ICharacter
         this.AddItem(new Bow());
         this.AddItem(new Helmet());
     }
+    
+    public int VP { get; set; }
+
+    public void StealVP(ICharacter target)
+    {
+        this.VP += target.VP;
+        target.VP = 0;
+    }
 
     public string Name { get; set; }
 

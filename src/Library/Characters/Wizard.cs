@@ -15,6 +15,14 @@ public class Wizard: IMagicCharacter
 
         this.AddItem(new Staff());
     }
+    
+    public int VP { get; set; }
+
+    public void StealVP(ICharacter target)
+    {
+        this.VP += target.VP;
+        target.VP = 0;
+    }
 
     public string Name { get; set; }
 
