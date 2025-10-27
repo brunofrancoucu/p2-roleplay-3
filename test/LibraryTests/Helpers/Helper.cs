@@ -1,13 +1,15 @@
 namespace Ucu.Poo.RoleplayGame;
 
-public class Helper(Manager managerRef) // primary constructor
+public class Helper
 {
-    private Manager _manRef = managerRef;
-
-    private Helmet _helmet = new();
-    private Bow _bow = new();
     private SpellOne _fireball = new();    // prev: new Spell("Fireball", 25, 0);
     private SpellOne _shield = new();      // prev: new Spell("Magic Shield", 0, 2);
+    private Manager _manRef;
+
+    public Helper(Manager managerRef)
+    {
+        _manRef = managerRef;
+    }
 
     // Helper, verbosity
     public static IEnumerable<T> Fill<T>(int count, Func<int, T> factory)
@@ -18,8 +20,8 @@ public class Helper(Manager managerRef) // primary constructor
         ICharacter chr = (ICharacter)Activator.CreateInstance(typeof(C), "Enemy-" + id);
 
         // Basic enemy equipment
-        chr.AddItem(_helmet);
-        chr.AddItem(_bow);
+        chr.AddItem(new Helmet());
+        chr.AddItem(new Bow());
 
         return (C)chr;
     }
@@ -40,7 +42,7 @@ public class Helper(Manager managerRef) // primary constructor
     }
 
     public void Populate(int e, int h) {
-        _manRef.Heroes.AddRange(Fill(e, i => CreateCharacter<Dwarf>(i)));
+        _manRef.Enemies.AddRange(Fill(e, i => CreateCharacter<Dwarf>(i)));
         _manRef.Heroes.AddRange(Fill(h, i => CreateWizard(i)));
     }
 }
