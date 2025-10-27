@@ -1,39 +1,44 @@
-// Encounters manager
-// Manages List of Heroes[] and Enemies[] (if (health <= 0) remove from list)
 namespace Ucu.Poo.RoleplayGame;
 
-public class Manager {
-    public List<ICharacter> Heroes;
-    public List<ICharacter> Enemies;
+public class Manager 
+{
+    public List<ICharacter> Heroes { get; set; }
+    public List<ICharacter> Enemies { get; set; }
 
-    // 1. Enemies attacks Heroes
-    public void EnemiesAttack() {
-        int victimId = 0;
-        Enemies.ForEach(enemy =>
-        {
-            Heroes.ForEach(hero =>
-            {
-                hero.ReceiveAttack(enemy.AttackValue);
-                if (hero.Health <= 0) Heroes.Remove(hero);
-            });
-            victimId += 1 % Heroes.Count;
-        });
+    public Manager()
+    {
+        Heroes = new List<ICharacter>();
+        Enemies = new List<ICharacter>();
     }
 
-    // 2. Heroes attack Enemies
-    public void HeroesAttack() {
-        int victimId = 0;
-        Heroes.ForEach(hero =>
+    public void EnemiesAttack()
+    {
+        if (Heroes.Count == 0 || Enemies.Count == 0) return;
+        for (int i = 0; i < Enemies.Count; i++)
         {
-            // Damage
-            victimId += 1 % Heroes.Count;
-        });
+            int victimId = i % Heroes.Count;
+            Heroes[victimId].ReceiveAttack(Enemies[i].AttackValue);
+        }
+        Heroes.RemoveAll(h => h.Health <= 0);
     }
 
-    public void DoEncounter() {
-        EnemiesAttack();
-        HeroesAttack();    
+    public void HeroesAttack()
+    {
+        if (Heroes.Count == 0 || Enemies.Count == 0) return;
+        for (int i = 0; i < Heroes.Count; i++)
+        {
+            int victimId = i % Enemies.Count;
+            Enemies[victimId].ReceiveAttack(Heroes[i].AttackValue);
+        }
+        Enemies.RemoveAll(e => e.Health <= 0);
+    }
 
-        // Check health of both
+    public void DoEncounter()
+    {
+        while (Heroes.Count > 0 && Enemies.Count > 0)
+        {
+            EnemiesAttack();
+            HeroesAttack();
+        }
     }
 }
