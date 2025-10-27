@@ -13,31 +13,34 @@ public class Helper(Manager managerRef) // primary constructor
     public static IEnumerable<T> Fill<T>(int count, Func<int, T> factory)
         => Enumerable.Range(0, count).Select(factory);
 
-    public ICharacter CreateEnemy(int id) {
-        Dwarf gandalf = new Dwarf("Enemy-" + id);
+    public C CreateCharacter<C>(int id) where C : ICharacter
+    {
+        ICharacter chr = (ICharacter)Activator.CreateInstance(typeof(C), "Enemy-" + id);
 
         // Basic enemy equipment
-        gandalf.AddItem(_helmet);
-        gandalf.AddItem(_bow);
+        chr.AddItem(_helmet);
+        chr.AddItem(_bow);
 
-        return gandalf;
+        return (C)chr;
     }
 
-    public ICharacter CreateHero(int id) {
+    // Create Wizard with 2 SpellOne in SpellBook 
+    public Wizard CreateWizard(int id)
+    {
         Wizard hero = new Wizard($"Hero{id}");
 
         // Create spellbook and add spells
         SpellsBook magicBookUltra = new SpellsBook();
         magicBookUltra.AddSpell(_fireball);
         magicBookUltra.AddSpell(_shield);
-        
+
         hero.AddItem(magicBookUltra);       // Total wizard damage: (70 + 70)
 
         return hero;
     }
 
     public void Populate(int e, int h) {
-        _manRef.Heroes.AddRange(Fill(e, i => CreateEnemy(i)));
-        _manRef.Heroes.AddRange(Fill(h, i => CreateHero(i)));
+        _manRef.Heroes.AddRange(Fill(e, i => CreateCharacter<Dwarf>(i)));
+        _manRef.Heroes.AddRange(Fill(h, i => CreateWizard(i)));
     }
 }

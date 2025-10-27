@@ -5,60 +5,63 @@ namespace LibraryTests;
 
 public class MechanicsTests
 {
+    Helper _helper;
+
+    ICharacter _enemy;
+    ICharacter _player;
 
     [SetUp]
     public void Setup()
     {
-        // Tests from RolePlay 1
-        
-        // // Create Items / Spells
-        // helmet = new Armour("Dark Helmet", 10);
-        // stick = new SpellWeapon("Staff of Power", 15, 5);
-        // fireball = new Spell("Fireball", 25, 0);
-        // shield1 = new Spell("Magic Shield", 0, 2);
-        // shield2 = new Spell("Shield of Darkness", 1, 8);
-        // gandalf = new Wizard("Gandalf", 100);
-        //
-        // // Create spellbook and add spells
-        // SpellBook magicBookUltra = new SpellBook();
-        // magicBookUltra.LearnSpell(fireball);
-        // magicBookUltra.LearnSpell(shield1);
-        //
-        // // Create Wizard attacker (total damage: 25 + 0 + 15) 
-        // gandalf.Book = magicBookUltra;
-        // gandalf.AddItem(helmet);
-        // gandalf.AddItem(stick);
-    }
+        _helper = new Helper(null);
 
-
-    [Test]
-    public void Attack()
-    {
-        
-    }
-
-
-    [Test]
-    public void Items()
-    {
-        
+        _enemy = _helper.CreateCharacter<Dwarf>(0);
+        _player = _helper.CreateCharacter<Knight>(1);
     }
 
     [Test]
-    public void Battle1()
+    public void Damage()
     {
-        // Tests from RolePlay 1
+        Axe axe = new Axe();
+        _enemy.ReceiveAttack(_player.AttackValue);
         
-        // // Create Wizard defender
-        // Wizard saruman = new Wizard("Saruman", 100);
-        // saruman.Book = new SpellBook();
-        // saruman.Book.LearnSpell(shield2);
-        // saruman.AddItem(helmet);
-        //
-        // gandalf.Attack(saruman);
-        //
-        // Assert.That(saruman.Health, Is.EqualTo(60));    // Post Gandalf attack health (test wpn type)
-        // saruman.Heal(80);
-        // Assert.That(saruman.Health, Is.EqualTo(118));   // Post self heal health (test max)
+        Assert.That(_enemy.Health, Is.EqualTo(100 + _enemy.DefenseValue - _player.AttackValue));
+
+        _enemy.AddItem(axe); // Double axes
+
+        Assert.That(_enemy.AttackValue, Is.EqualTo(axe.AttackValue*2 + 15)); // Includes: Axe, Bow
+    }
+
+    [Test]
+    public void Inventory()
+    {
+        Archer chr = _helper.CreateCharacter<Archer>(0);
+
+        IItem shield = new Shield();
+        chr.AddItem(shield); // +14 Defence
+
+        Assert.That(chr.DefenseValue, Is.EqualTo(50));
+
+        chr.RemoveItem(shield);
+
+        Assert.That(chr.DefenseValue, Is.EqualTo(18*2)); // Includes 2*Helmet
+    }
+    
+    [Test]
+    public void Health()
+    {
+        _enemy.ReceiveAttack(_player.AttackValue);
+        
+        Assert.That(_enemy.Health, Is.EqualTo(100 + _enemy.DefenseValue - _player.AttackValue));
+
+        Helmet helmet2 = new Helmet();
+        _enemy.AddItem(helmet2);        // Total defence of 18*2
+        _enemy.Cure();                  // Restored Health
+        
+        // Multiple attacks
+        _enemy.ReceiveAttack(_player.AttackValue);
+        _enemy.ReceiveAttack(_player.AttackValue);
+        
+        Assert.That(_enemy.Health, Is.EqualTo(100 + _enemy.DefenseValue - _player.AttackValue*2));
     }
 }

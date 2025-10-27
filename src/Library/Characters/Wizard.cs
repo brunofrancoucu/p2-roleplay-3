@@ -3,9 +3,9 @@ namespace Ucu.Poo.RoleplayGame;
 
 public class Wizard: IMagicCharacter
 {
-    private int health = 100;
+    private int _health = 100;
 
-    private List<IItem> items = new List<IItem>();
+    private List<IItem> _items = new List<IItem>();
 
     private List<IMagicalItem> magicalItems = new List<IMagicalItem>();
 
@@ -31,7 +31,7 @@ public class Wizard: IMagicCharacter
         get
         {
             int value = 0;
-            foreach (IItem item in this.items)
+            foreach (IItem item in this._items)
             {
                 if (item is IAttackItem)
                 {
@@ -54,7 +54,7 @@ public class Wizard: IMagicCharacter
         get
         {
             int value = 0;
-            foreach (IItem item in this.items)
+            foreach (IItem item in this._items)
             {
                 if (item is IDefenseItem)
                 {
@@ -76,35 +76,33 @@ public class Wizard: IMagicCharacter
     {
         get
         {
-            return this.health;
+            return this._health + this.DefenseValue;
         }
         private set
         {
-            this.health = value < 0 ? 0 : value;
+            this._health = value < 0 ? 0 : value;
         }
     }
 
     public void ReceiveAttack(int power)
     {
-        if (this.DefenseValue < power)
-        {
-            this.Health -= power - this.DefenseValue;
-        }
+        int minHealth = -this.DefenseValue;
+        this._health = Math.Max(minHealth, this._health - power);
     }
 
     public void Cure()
     {
-        this.Health = 100;
+        this._health = 100;
     }
 
     public void AddItem(IItem item)
     {
-        this.items.Add(item);
+        this._items.Add(item);
     }
 
     public void RemoveItem(IItem item)
     {
-        this.items.Remove(item);
+        this._items.Remove(item);
     }
 
     public void AddItem(IMagicalItem item)
