@@ -46,10 +46,7 @@ public class EncountersTests
         _manager.EnemiesAttack();
  
         // Expected: all heroes receive equal damage
-        _manager.Heroes.ForEach(hero =>
-        {
-            Assert.That(hero.Health, Is.EqualTo(initialHealth - _enemyDamage));
-        });
+        Assert.That(_manager.Heroes.Select(h => h.Health), Has.All.EqualTo(initialHealth - _enemyDamage));
     }
 
     [Test]
